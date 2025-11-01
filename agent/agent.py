@@ -26,12 +26,10 @@ class GrammarAgent:
     def __init__(self):
 
         GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
-        print(GOOGLE_API_KEY)
 
         provider = GoogleProvider(api_key=GOOGLE_API_KEY)
-        if not provider:
-            raise HTTPException(status_code=404, detail="no api key")
-        model = GoogleModel("gemini-2.0-flash", provider=provider)
+        
+        model = GoogleModel("gemini-2.5-pro", provider=provider)
 
         self.agent = Agent(
                 model=model,
