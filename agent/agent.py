@@ -25,7 +25,7 @@ class GrammarAgent:
 
     def __init__(self):
 
-        GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+        GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "api key")
 
         provider = GoogleProvider(api_key=GOOGLE_API_KEY)
         
