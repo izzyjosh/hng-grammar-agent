@@ -78,4 +78,4 @@ async def grammar_check(phrase: PhraseSchema):
         return JSONResponse(status_code=200, content=data)
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=HOST, port=PORT)
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=True)

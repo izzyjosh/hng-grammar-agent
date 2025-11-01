@@ -15,8 +15,6 @@ from schemas import GrammarResponse
 load_dotenv()
 
 
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
-print(GOOGLE_API_KEY)
 class GrammarAgent:
     SYSTEM_INSTRUCTIONS = (
             "You are a specialized assistant that helps users correct grammar, spelling, "
@@ -26,7 +24,10 @@ class GrammarAgent:
             )
 
     def __init__(self):
-    
+
+        GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+        print(GOOGLE_API_KEY)
+
         provider = GoogleProvider(api_key=GOOGLE_API_KEY)
         if not provider:
             raise HTTPException(status_code=404, detail="no api key")
