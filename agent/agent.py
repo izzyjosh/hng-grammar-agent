@@ -15,7 +15,7 @@ from schemas import GrammarResponse
 load_dotenv()
 
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 print(GOOGLE_API_KEY)
 class GrammarAgent:
     SYSTEM_INSTRUCTIONS = (
@@ -27,7 +27,7 @@ class GrammarAgent:
 
     def __init__(self):
     
-        provider = GoogleProvider(api_key="AIzaSyAT9Mam8ioai3kSPbjSK7W135GWMAAs5k8")
+        provider = GoogleProvider(api_key=GOOGLE_API_KEY)
         if not provider:
             raise HTTPException(status_code=404, detail="no api key")
         model = GoogleModel("gemini-2.0-flash", provider=provider)
