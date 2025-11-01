@@ -27,9 +27,8 @@ class GrammarAgent:
 
         GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "api key")
 
-        provider = GoogleProvider(api_key=GOOGLE_API_KEY)
-        
-        model = GoogleModel("gemini-2.5-pro", provider=provider)
+        provider = GoogleProvider(api_key=GOOGLE_API_KEY)     
+        model = GoogleModel("gemini-2.0-flash", provider=provider)
 
         self.agent = Agent(
                 model=model,
