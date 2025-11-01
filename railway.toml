@@ -1,0 +1,10 @@
+# railway.toml
+
+[build]
+builder = "Python"  # tells Railway to use the built-in Python environment
+
+[deploy]
+startCommand = "python -m app.main"
+
+[envs]
+  GEMINI_API_KEY = "{{GOOGLE_API_KEY}}"

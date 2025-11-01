@@ -15,7 +15,7 @@ from schemas import GrammarResponse
 load_dotenv()
 
 
-GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 print(GOOGLE_API_KEY)
 class GrammarAgent:
     SYSTEM_INSTRUCTIONS = (
