@@ -22,7 +22,7 @@ from a2a_setup import a2a_app
 load_dotenv()
 
 PORT = int(os.getenv("PORT", 5001))
-HOST = os.getenv("HOST", "127.0.0.1")
+HOST = os.getenv("HOST", "0.0.0.0")
 
 
 app = FastAPI(

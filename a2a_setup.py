@@ -15,7 +15,7 @@ from agent.agent_executor import GrammarAgentExecutor
 load_dotenv()
 
 PORT = int(os.getenv("PORT", 5001))
-HOST = os.getenv("HOST", "127.0.0.1")
+HOST = os.getenv("HOST", "0.0.0.0")
 
 skill = AgentSkill(
         id="grammar_corrector",
