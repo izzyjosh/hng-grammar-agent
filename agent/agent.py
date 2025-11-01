@@ -24,6 +24,8 @@ class GrammarAgent:
             )
 
     def __init__(self):
+        api_key = os.getenv("GEMINI_API_KEY")
+        print(api_key)
         provider = GoogleProvider(api_key=os.getenv("GEMINI_API_KEY"))
         if not provider:
             raise HTTPException(status_code=404, detail="no api key")
