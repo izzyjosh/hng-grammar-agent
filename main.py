@@ -40,7 +40,7 @@ app.mount("/a2a", a2a_app.build())
 async def grammar_check(phrase: PhraseSchema):
     """ Main endpoint that handles ai agent operations"""
     
-    base_url = "http://127.0.0.1:5001/a2a/"
+    base_url = f"http://{HOST}:{PORT}/a2a/"
 
     async with httpx.AsyncClient(timeout=httpx.Timeout(120)) as httpx_client:
         resolver = A2ACardResolver(

@@ -4,6 +4,8 @@ import os
 # Library import 
 from pydantic_ai import Agent
 from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.models.google import GoogleModel
+from pydantic_ai.providers.google import GoogleProvider
 from dotenv import load_dotenv
 from fastapi.exceptions import HTTPException
 
@@ -22,7 +24,8 @@ class GrammarAgent:
             )
 
     def __init__(self):
-        model = GeminiModel("gemini-2.0-flash")
+        provider = GoogleProvider(api_key=os.getenv("GEMINI_API_KEY", "NO KEY"))
+        model = GoogleModel("gemini-2.0-flash", provider=provider)
 
         self.agent = Agent(
                 model=model,
