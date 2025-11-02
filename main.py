@@ -9,7 +9,6 @@ from fastapi import FastAPI, HTTPException, Request
 from a2a.client import A2ACardResolver, A2AClient
 from a2a.types import A2A, AgentCard, SendMessageRequest, MessageSendParams
 from fastapi.responses import JSONResponse
-from starlette.middleware.proxy_headers import ProxyHeadersMiddleware
 import uvicorn
 from dotenv import load_dotenv
 import httpx
@@ -30,8 +29,6 @@ app = FastAPI(
         description="Integrating an AI agent with telex.im that helps user to check for sentence errors",
         version="1.0.0"
         )
-
-app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
 
 #--------------------------------------
 # a2a sub app mounting with fastapi app
