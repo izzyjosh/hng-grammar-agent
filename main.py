@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException, Request
 from a2a.client import A2ACardResolver, A2AClient
 from a2a.types import A2A, AgentCard, SendMessageRequest, MessageSendParams
 from fastapi.responses import JSONResponse
+from starlette.middleware.proxy_headers import ProxyHeadersMiddleware
 import uvicorn
 from dotenv import load_dotenv
 import httpx
@@ -30,6 +31,8 @@ app = FastAPI(
         version="1.0.0"
         )
 
+app.add_middleware(ProxyHeadersMiddleware, trusted_hosts="*")
+
 #--------------------------------------
 # a2a sub app mounting with fastapi app
 #--------------------------------------
@@ -39,10 +42,9 @@ app.mount("/a2a", a2a_app.build())
 async def grammar_check(request: Request, phrase: PhraseSchema):
     """ Main endpoint that handles ai agent operations"""
 
-    base_url = str(request.base_url)
-    
+    base_url = str(request.base_url).replace("http://", "https://")
     a2a_url = f"{base_url}a2a/"
-    print(a2a_url)
+
 
     async with httpx.AsyncClient(timeout=httpx.Timeout(120)) as httpx_client:
         resolver = A2ACardResolver(
