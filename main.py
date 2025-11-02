@@ -5,7 +5,7 @@ import os
 from typing import Any
 
 # Library import
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from a2a.client import A2ACardResolver, A2AClient
 from a2a.types import A2A, AgentCard, SendMessageRequest, MessageSendParams
 from fastapi.responses import JSONResponse
@@ -21,7 +21,7 @@ from a2a_setup import a2a_app
 
 load_dotenv()
 
-PORT = int(os.getenv("PORT", 5001))
+PORT = int(os.getenv("PORT", 5000))
 
 
 app = FastAPI(
@@ -36,15 +36,18 @@ app = FastAPI(
 app.mount("/a2a", a2a_app.build())
 
 @app.post("/grammar-check")
-async def grammar_check(phrase: PhraseSchema):
+async def grammar_check(request: Request, phrase: PhraseSchema):
     """ Main endpoint that handles ai agent operations"""
+
+    base_url = str(request.base_url)
     
-    base_url = f"http://0.0.0.0:{PORT}/a2a/"
+    a2a_url = f"{base_url}a2a/"
+    print(a2a_url)
 
     async with httpx.AsyncClient(timeout=httpx.Timeout(120)) as httpx_client:
         resolver = A2ACardResolver(
                 httpx_client=httpx_client,
-                base_url=base_url
+                base_url=a2a_url
                 )
         final_agent_card_to_use: AgentCard | None = None
         try:
@@ -67,14 +70,14 @@ async def grammar_check(phrase: PhraseSchema):
                 'messageId': uuid4().hex,
             },
         }
-        request = SendMessageRequest(
+        a2a_request = SendMessageRequest(
             id=str(uuid4()), params=MessageSendParams(**send_message_payload)
         )
 
-        response = await grammar_agent_client.send_message(request)
+        response = await grammar_agent_client.send_message(a2a_request)
         data = response.model_dump(mode='json', exclude_none=True)
 
         return JSONResponse(status_code=200, content=data)
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=PORT, reload=True)
