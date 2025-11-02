@@ -15,7 +15,6 @@ from agent.agent_executor import GrammarAgentExecutor
 load_dotenv()
 
 PORT = int(os.getenv("PORT", 5001))
-HOST = os.getenv("HOST", "0.0.0.0")
 
 skill = AgentSkill(
         id="grammar_corrector",
@@ -29,7 +28,7 @@ skill = AgentSkill(
 public_agent_card = AgentCard(
         name="Grammar Corrector Agent",
         description="An agent that corrects grammatical errors in inputed sentences",
-        url=f"http://{HOST}:{PORT}/a2a/",
+        url=f"http://0.0.0.0:{PORT}/a2a/",
         version="1.0.0",
         default_input_modes=["text"],
         default_output_modes=["text"],

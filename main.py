@@ -22,7 +22,6 @@ from a2a_setup import a2a_app
 load_dotenv()
 
 PORT = int(os.getenv("PORT", 5001))
-HOST = os.getenv("HOST", "0.0.0.0")
 
 
 app = FastAPI(
@@ -40,7 +39,7 @@ app.mount("/a2a", a2a_app.build())
 async def grammar_check(phrase: PhraseSchema):
     """ Main endpoint that handles ai agent operations"""
     
-    base_url = f"http://{HOST}:{PORT}/a2a/"
+    base_url = f"http://0.0.0.0:{PORT}/a2a/"
 
     async with httpx.AsyncClient(timeout=httpx.Timeout(120)) as httpx_client:
         resolver = A2ACardResolver(
@@ -78,4 +77,4 @@ async def grammar_check(phrase: PhraseSchema):
         return JSONResponse(status_code=200, content=data)
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=HOST, port=PORT, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=True)
